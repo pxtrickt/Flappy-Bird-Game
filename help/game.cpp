@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 
-//game constructer
+
 Game::Game() : window(nullptr), renderer(nullptr), squTexture(nullptr),
 backgroundTexture(nullptr), treeTexture(nullptr), font(nullptr),
 squX(100), squY(SCREEN_HEIGHT / 2), squVelocity(0.0f), quit(false), squJump(false) {}
@@ -23,7 +23,7 @@ void loadTexture(SDL_Renderer* renderer, SDL_Texture*& texture, const char* path
 }
 
 bool Game::initialize() {
-    // texture loading
+    
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
         return false;
@@ -183,24 +183,24 @@ void Game::run() {
                 }
             }
 
-            // ---------- removing off-screen pipes
+            //removing off-screen pipes
             pipePairs.erase(std::remove_if(pipePairs.begin(), pipePairs.end(), [](const PipePair& pair) {
                 return pair.topPipe.x + PIPE_WIDTH < 0;
                 }), pipePairs.end());
 
 
-            // ---------- enemy spawn & movement
+            //enemy spawn & movement
             if (score >= 10 && !enemyActive) {
                 enemyActive = true;
                 enemyX = SCREEN_WIDTH;
                 enemyAngle = 0.0f;
-                baseY = rand() % (SCREEN_HEIGHT - ENEMY_HEIGHT - 200) + 100;  // random baseY 
+                baseY = rand() % (SCREEN_HEIGHT - ENEMY_HEIGHT - 200) + 100;
                 enemyRect = { enemyX, baseY, ENEMY_WIDTH, ENEMY_HEIGHT };
             }
 
             if (enemyActive) {
                 enemyX -= PIPE_VELOCITY + 1;
-                enemyAngle += 0.1f;  // increase angle over time for smooth wave
+                enemyAngle += 0.1f; 
 
                 enemyY = static_cast<int>(baseY + amplitude * sinf(enemyAngle));
 
